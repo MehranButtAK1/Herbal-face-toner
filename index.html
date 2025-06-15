@@ -52,8 +52,24 @@
     <p>100% Natural (Aloe Vera + Cucumber) </p>
   </header>
   <div class="container">
-    <div class="card">
-      <img src="Picsart_25-06-15_13-05-51-891.jpg" alt="Herbal Facial Toner" />
+      <!-- Slideshow -->
+  <div class="slideshow-container" onmouseover="pauseSlides()" onmouseout="resumeSlides()">
+    <div class="mySlides fade">
+      <img src="/frame.png" alt="Herbal Product 1">
+    </div>
+    <div class="mySlides fade">
+      <img src="IMG-20250614-WA0021.jpg" alt="Herbal Product 2">
+    </div>
+    <div class="mySlides fade">
+      <img src="IMG-20250614-WA0021.jpg" alt="Herbal Product 3">
+    </div>
+  </div>
+
+  <div class="dot-container">
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+    <span class="dot"></span> 
+  </div>
       <h2>Description</h2>
       <p>Toner is used to clean skin and shrink the appearance of pores. It also moisturizes, protects, and refreshes the skin.</p>
       <h2>Direction to Use</h2>
@@ -82,5 +98,42 @@
     <center><footer>
     Made with ♥ by Hck_Pharma
   </footer>  </center>
+  <script>
+     let slideIndex = 0;
+    let slideInterval;
+
+    function showSlides() {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1}    
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
+
+    function startSlideShow() {
+      slideInterval = setInterval(showSlides, 3000);
+    }
+
+    function pauseSlides() {
+      clearInterval(slideInterval);
+    }
+
+    function resumeSlides() {
+      startSlideShow();
+    }
+
+    window.onload = function() {
+      showSlides();
+      startSlideShow();
+    };
+  </script>
 </body>
 </html>
