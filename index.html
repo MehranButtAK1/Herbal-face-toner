@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -44,35 +43,32 @@
       margin-top: 2em;
       color: #555;
     }
-
-   .mySlides { display: none; }
-.slideshow-container { position: relative; max-width: 100%; margin: auto; }
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.3s;
-  border-radius: 3px;
-  background-color: rgba(0,0,0,0.5);
-  user-select: none;
-}
-.prev { left: 0; }
-.next { right: 0; }
-.prev:hover, .next:hover { background-color: rgba(0,0,0,0.8); }
-.dot {
-  height: 15px;
-  width: 15px;
-  margin: 0 4px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  cursor: pointer;
-}
-.active { background-color: #717171; }
+   
+   
+   
+        .slider {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        .slides {
+            display: flex;
+            width: 900px; /* 3 images * 300px each */
+            transition: transform 0.5s;
+        }
+        .slide {
+            width: 300px;
+            height: 200px;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 0 5px;
+        }
 
     
   </style>
@@ -87,20 +83,17 @@
  
 
    <!-- Image Slideshow Start -->
-<div class="slideshow-container" onmouseover="pauseSlides()" onmouseout="resumeSlides()">
-  <div class="mySlides fade"><img src="Picsart_25-06-15_13-05-51-891.jpg" alt="Slide 1" style="width:100%; border-radius:10px;"></div>
-  <div class="mySlides fade"><img src="IMG-20250615-WA0042.jpg" alt="Slide 2" style="width:100%; border-radius:10px;"></div>
-  <div class="mySlides fade"><img src="Description (1).png" alt="Slide 3" style="width:100%; border-radius:10px;"></div>
-
-  <a class="prev" onclick="changeSlide(-1)">❮</a>
-  <a class="next" onclick="changeSlide(1)">❯</a>
-</div>
-
-<div style="text-align:center; margin-top:10px;">
-  <span class="dot" onclick="currentSlide(1)"></span>
-  <span class="dot" onclick="currentSlide(2)"></span>
-  <span class="dot" onclick="currentSlide(3)"></span>
-</div>
+<div class="slider">
+        <div class="slides" id="slides">
+            <div class="slide"><img src="Picsart_25-06-15_13-05-51-891.jpg" alt="Image 1"></div>
+            <div class="slide"><img src="/IMG-20250615-WA0042.jpg" alt="Image 2"></div>
+            <div class="slide"><img src="/Description (1).png" alt="Image 3"></div>
+        </div>
+    </div>
+    <div class="buttons">
+        <button onclick="prevSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
 <!-- Image Slideshow End -->
 
     
@@ -134,82 +127,26 @@
   </footer>  </center>
   <script>
      let slideIndex = 0;
-    let slideInterval;
+        const slides = document.getElementById("slides");
+        const totalSlides = 3;
 
-    function showSlides() {
-      let i;
-      let slides = document.getElementsByClassName("mySlides");
-      let dots = document.getElementsByClassName("dot");
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-      }
-      slideIndex++;
-      if (slideIndex > slides.length) {slideIndex = 1}    
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-      }
-      slides[slideIndex-1].style.display = "block";  
-      dots[slideIndex-1].className += " active";
-    }
+        function nextSlide() {
+            if (slideIndex < totalSlides - 1) {
+                slideIndex++;
+            } else {
+                slideIndex = 0;
+            }
+            slides.style.transform = `translateX(-${slideIndex * 300}px)`;
+        }
 
-    function startSlideShow() {
-      slideInterval = setInterval(showSlides, 3000);
-    }
-
-    function pauseSlides() {
-      clearInterval(slideInterval);
-    }
-
-    function resumeSlides() {
-      startSlideShow();
-    }
-
-    window.onload = function() {
-      showSlides();
-      startSlideShow();
-    };
-
-let slideIndex = 1;
-let slideInterval;
-
-function showSlides(n) {
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  if (n > slides.length) slideIndex = 1;
-  if (n < 1) slideIndex = slides.length;
-  for (let slide of slides) slide.style.display = "none";
-  for (let dot of dots) dot.classList.remove("active");
-  slides[slideIndex - 1].style.display = "block";
-  dots[slideIndex - 1].classList.add("active");
-}
-
-function changeSlide(n) {
-  clearInterval(slideInterval);
-  showSlides(slideIndex += n);
-}
-
-function currentSlide(n) {
-  clearInterval(slideInterval);
-  showSlides(slideIndex = n);
-}
-
-function autoSlide() {
-  showSlides(++slideIndex);
-}
-
-function pauseSlides() {
-  clearInterval(slideInterval);
-}
-
-function resumeSlides() {
-  slideInterval = setInterval(autoSlide, 3000);
-}
-
-window.onload = function() {
-  showSlides(slideIndex);
-  slideInterval = setInterval(autoSlide, 3000);
-};
-
+        function prevSlide() {
+            if (slideIndex > 0) {
+                slideIndex--;
+            } else {
+                slideIndex = totalSlides - 1;
+            }
+            slides.style.transform = `translateX(-${slideIndex * 300}px)`;
+        }
     
   </script>
 </body>
